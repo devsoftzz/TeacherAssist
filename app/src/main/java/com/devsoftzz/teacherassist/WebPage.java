@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -12,7 +13,9 @@ import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -64,8 +67,8 @@ public class WebPage extends AppCompatActivity {
                         "document.getElementById('USERNAME').value = '" + user + "';" +
                         "document.getElementById('loginbutton').click()";
                 String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
-                mWebView.getSettings().setUserAgentString(newUA);
-                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                //mWebView.getSettings().setUserAgentString(newUA);
+                //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 break;
             case "Trakking":
                 url = "http://ssa-elb-spoc-823717838.ap-south-1.elb.amazonaws.com/ssachildtracking/ctelogin.aspx";
@@ -199,9 +202,17 @@ public class WebPage extends AppCompatActivity {
         WebSettings webSettings0 = mWebView.getSettings();
         webSettings0.setJavaScriptEnabled(true);
         webSettings0.setDomStorageEnabled(true);
+        webSettings0.setBuiltInZoomControls(true);
+        webSettings0.setDisplayZoomControls(false);
+        webSettings0.setSupportZoom(true);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                Toast.makeText(getApplicationContext(),request.getUrl().toString(),Toast.LENGTH_LONG).show();
+                if(request.getUrl().toString().equals("http://ssaexam.in/Products/cms/index.php?modname=Dashboard/dashboard.php")){
+                    mWebView.setPadding(0, 0, 0, 0);
+                    mWebView.setInitialScale(getScale());
+                }
                 return super.shouldOverrideUrlLoading(view, request);
             }
             public void onPageFinished(WebView view, final String url) {
@@ -234,5 +245,12 @@ public class WebPage extends AppCompatActivity {
             }
         });
         mWebView.loadUrl(url);
+    }
+    private int getScale(){
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+        Double val = new Double(width)/new Double(960);
+        val = val * 100d;
+        return val.intValue();
     }
 }

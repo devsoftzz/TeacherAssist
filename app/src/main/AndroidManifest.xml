@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".setValues"></activity>
-        <activity android:name=".WebPage" />
+        <activity android:name=".WebPage" android:configChanges="orientation|screenSize"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
