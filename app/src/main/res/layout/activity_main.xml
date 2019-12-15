@@ -14,7 +14,8 @@
                 android:id="@+id/toolbar"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
-                app:title="શિક્ષક સહાયક">
+                app:title=" શિક્ષક સહાયક"
+                app:logo="@drawable/logo">
 
             </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
