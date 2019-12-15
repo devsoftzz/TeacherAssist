@@ -21,6 +21,7 @@ public class setValues extends AppCompatActivity {
     private String title,type;
     private Button mSet;
     private TextInputLayout mUser,mPass;
+    private SharedPreferences mStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,42 +33,13 @@ public class setValues extends AppCompatActivity {
         mSet = findViewById(R.id.set);
         mUser = findViewById(R.id.username);
         mPass = findViewById(R.id.password);
-
-        SharedPreferences mStorage = getSharedPreferences("values",MODE_PRIVATE);
+        mStorage = getSharedPreferences("values",MODE_PRIVATE);
         final SharedPreferences.Editor editor = mStorage.edit();
         final Intent intent = new Intent(setValues.this,WebPage.class);
-
         title = getIntent().getStringExtra("Title");
         type = getIntent().getStringExtra("Type");
-        mTitle.setText(title);
-        switch (type){
-            case "Attendance":
-                mBack.setBackgroundColor(Color.rgb(255,236,1));
-                mUser.getEditText().setText(mStorage.getString("Attendance_User",""));
-                mPass.getEditText().setText(mStorage.getString("Attendance_Pass",""));
-                break;
-            case "Marks":
-                mBack.setBackgroundColor(Color.rgb(0, 83, 173));
-                mUser.getEditText().setText(mStorage.getString("Marks_User",""));
-                mPass.getEditText().setText(mStorage.getString("Marks_Pass",""));
-                break;
-            case "Trakking":
-                mBack.setBackgroundColor(Color.rgb(161, 158, 205));
-                mUser.getEditText().setText(mStorage.getString("Trakking_User",""));
-                mPass.getEditText().setText(mStorage.getString("Trakking_Pass",""));
-                break;
-            case "SAS":
-                mBack.setBackgroundColor(Color.rgb(255, 109, 49));
-                mUser.getEditText().setText(mStorage.getString("SAS_User",""));
-                mPass.getEditText().setText(mStorage.getString("SAS_Pass",""));
-                break;
-            case "Digital":
-                mBack.setBackgroundColor(Color.rgb(239, 89, 123));
-                mUser.getEditText().setText(mStorage.getString("Digital_User",""));
-                mPass.getEditText().setText(mStorage.getString("Digital_Pass",""));
-                break;
-        }
 
+        initialSetup();
         mSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +57,6 @@ public class setValues extends AppCompatActivity {
                             editor.putString("Attendance_User", mUser.getEditText().getText().toString());
                             editor.putString("Attendance_Pass", mPass.getEditText().getText().toString());
                             editor.commit();
-
                             intent.putExtra("Type", "Attendance");
                             startActivity(intent);
                             finish();
@@ -117,18 +88,40 @@ public class setValues extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                             break;
-                        case "Digital":
-                            editor.putBoolean("Digital", true);
-                            editor.putString("Digital_User", mUser.getEditText().getText().toString());
-                            editor.putString("Digital_Pass", mPass.getEditText().getText().toString());
-                            editor.commit();
-                            intent.putExtra("Type", "Digital");
-                            startActivity(intent);
-                            finish();
-                            break;
                     }
                 }
             }
         });
+    }
+
+    public void initialSetup(){
+        mTitle.setText(title);
+        switch (type){
+            case "Attendance":
+                mBack.setBackgroundColor(Color.rgb(255,236,1));
+                mUser.getEditText().setText(mStorage.getString("Attendance_User",""));
+                mPass.getEditText().setText(mStorage.getString("Attendance_Pass",""));
+                break;
+            case "Marks":
+                mBack.setBackgroundColor(Color.rgb(0, 83, 173));
+                mUser.getEditText().setText(mStorage.getString("Marks_User",""));
+                mPass.getEditText().setText(mStorage.getString("Marks_Pass",""));
+                break;
+            case "Trakking":
+                mBack.setBackgroundColor(Color.rgb(161, 158, 205));
+                mUser.getEditText().setText(mStorage.getString("Trakking_User",""));
+                mPass.getEditText().setText(mStorage.getString("Trakking_Pass",""));
+                break;
+            case "SAS":
+                mBack.setBackgroundColor(Color.rgb(255, 109, 49));
+                mUser.getEditText().setText(mStorage.getString("SAS_User",""));
+                mPass.getEditText().setText(mStorage.getString("SAS_Pass",""));
+                break;
+            case "Digital":
+                mBack.setBackgroundColor(Color.rgb(239, 89, 123));
+                mUser.getEditText().setText(mStorage.getString("Digital_User",""));
+                mPass.getEditText().setText(mStorage.getString("Digital_Pass",""));
+                break;
+        }
     }
 }

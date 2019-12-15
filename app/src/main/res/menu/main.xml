@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="Change Passwords"
-        android:id="@+id/chane_pass"/>
+        android:title="Share"
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share_black_24dp"
+        app:showAsAction="always"/>
     <item
-        android:title="Info"
-        android:id="@+id/info"/>
+        android:title="Change\nPasswords"
+        android:id="@+id/chane_pass"
+        app:showAsAction="always"
+        />
 </menu>

@@ -11,20 +11,19 @@ import android.view.View;
 public class password extends AppCompatActivity {
 
     private CardView mAttendance,mMarks,mTrakking,mSAS,mSamarth;
+    private Intent PasswordIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+        PasswordIntent = new Intent(password.this,setValues.class);
 
         mAttendance = findViewById(R.id.Online);
         mAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(password.this,setValues.class);
-                    intent.putExtra("Title","ઓનલાઇન હાજરી");
-                    intent.putExtra("Type","Attendance");
-                    startActivity(intent);
+                openSetValue("ઓનલાઇન હાજરી","Attendance");
             }
         });
 
@@ -32,10 +31,7 @@ public class password extends AppCompatActivity {
         mMarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(password.this,setValues.class);
-                    intent.putExtra("Title","પરીક્ષા માર્ક એન્ટ્રી");
-                    intent.putExtra("Type","Marks");
-                    startActivity(intent);
+                openSetValue("પરીક્ષા માર્ક એન્ટ્રી","Marks");
             }
         });
 
@@ -43,10 +39,7 @@ public class password extends AppCompatActivity {
         mTrakking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(password.this,setValues.class);
-                    intent.putExtra("Title","આધાર DISE Child ટ્રેક્કીગ");
-                    intent.putExtra("Type","Trakking");
-                    startActivity(intent);
+                openSetValue("આધાર DISE Child ટ્રેક્કીગ","Trakking");
             }
         });
 
@@ -54,10 +47,7 @@ public class password extends AppCompatActivity {
         mSAS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(password.this,setValues.class);
-                    intent.putExtra("Title","SAS Gujarat");
-                    intent.putExtra("Type","SAS");
-                    startActivity(intent);
+                openSetValue("SAS Gujarat","SAS");
             }
         });
 
@@ -65,11 +55,19 @@ public class password extends AppCompatActivity {
         mSamarth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(password.this,samarth_setValue.class);
-                    intent.putExtra("Title","Samarth 2");
-                    intent.putExtra("Type","Samarth");
-                    startActivity(intent);
+                Intent intent = new Intent(password.this,samarth_setValue.class);
+                intent.putExtra("Title","Samarth II");
+                startActivity(intent);
+                finish();
             }
         });
     }
+
+    public void openSetValue(String Title, String Type){
+        PasswordIntent.putExtra("Title",Title);
+        PasswordIntent.putExtra("Type",Type);
+        startActivity(PasswordIntent);
+        finish();
+    }
+
 }
